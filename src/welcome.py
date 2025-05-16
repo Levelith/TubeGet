@@ -31,7 +31,7 @@ class WelcomeWindow(QWidget):
         self.setLayout(layout)
 
     def download_video(self):
-        QMessageBox.information(self, "Video", "Aquí iría la lógica para descargar un video.")
+        QMessageBox.information(self, "Video", "Here would be the logic for downloading a video.")
 
     def download_playlist(self):
-        QMessageBox.information(self, "Playlist", "Aquí iría la lógica para descargar una playlist.")
+        QMessageBox.information(self, "Playlist", "Here would be the logic for downloading a playlist.")
