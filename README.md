@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Características
+## 🚀 Features
 
 - ✅ Download video or audio only (MP3)
 - ✅ Clean and easy-to-use graphical interface
@@ -14,7 +14,7 @@
 
 ---
 
-## 🛠️ Requisitos
+## 🛠️ Requirements
 
 - Python 3.8 or better
 - PyQt5
