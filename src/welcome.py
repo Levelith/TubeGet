@@ -55,4 +55,6 @@ class WelcomeWindow(QWidget):
         self.close()
 
     def open_settings(self):
-        QMessageBox.information(self, "Settings", "Here would be the configuration window.")
+        from src.settings_window import SettingsWindow
+        dialog = SettingsWindow(self)
+        dialog.exec_()
