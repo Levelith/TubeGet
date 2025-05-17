@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import (
     QSpacerItem, QSizePolicy
 )
 from PyQt5.QtCore import Qt
+from src.downloadvid_win import DownloadVideoWindow
+from src.downloadpl_win import DownloadPlaylistWindow
 
 class WelcomeWindow(QWidget):
     def __init__(self):
@@ -43,10 +45,14 @@ class WelcomeWindow(QWidget):
         self.setLayout(main_layout)
 
     def download_video(self):
-        QMessageBox.information(self, "Video", "Here would be the logic for downloading a video.")
+        self.video_window = DownloadVideoWindow()
+        self.video_window.show()
+        self.close()
 
     def download_playlist(self):
-        QMessageBox.information(self, "Playlist", "Here would be the logic for downloading a playlist.")
+        self.playlist_window = DownloadPlaylistWindow()
+        self.playlist_window.show()
+        self.close()
 
     def open_settings(self):
         QMessageBox.information(self, "Settings", "Here would be the configuration window.")
