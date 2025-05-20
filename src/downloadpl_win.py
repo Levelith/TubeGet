@@ -1,10 +1,10 @@
-from urllib.parse import urlparse, parse_qs
 from PyQt5.QtWidgets import (
     QWidget, QLabel, QVBoxLayout,
     QHBoxLayout, QPushButton, QLineEdit,
     QMessageBox
 )
 from PyQt5.QtCore import Qt
+from src.validations.validations import is_valid_youtube_playlist
 
 class DownloadPlaylistWindow(QWidget):
     def __init__(self):
@@ -42,19 +42,16 @@ class DownloadPlaylistWindow(QWidget):
 
         self.setLayout(main_layout)
 
-    # TODO: This is URL validation, only URLs with ‘list’ as a parameter are accepted here.
     def process_url(self):
         url = self.url_input.text().strip()
         if not url:
             QMessageBox.warning(self, 'Missing URL', 'Please enter a playlist URL.')
             return
-        
-        parsed_url = urlparse(url)
-        query_params = parse_qs(parsed_url.query)
 
-        if "list" not in query_params:
-            QMessageBox.critical(self, 'Invalid URL',
-                                 'This does not apper to be a valid YouTube playlist URL.')
+        is_valid, message = is_valid_youtube_playlist(url)
+        
+        if not is_valid:
+            QMessageBox.critical(self, 'Invalid URL', message)
             return
         
         # TODO: Here would be the call for the playlist download manager

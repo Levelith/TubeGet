@@ -1,11 +1,11 @@
-import re
-from urllib.parse import urlparse, parse_qs
 from PyQt5.QtWidgets import (
     QWidget, QVBoxLayout, QLabel,
     QHBoxLayout, QPushButton, QLineEdit,
     QMessageBox
 )
 from PyQt5.QtCore import Qt
+from urllib.parse import urlparse
+from src.validations.validations import is_valid_youtube_video
 
 class DownloadVideoWindow(QWidget):
     def __init__(self):
@@ -43,34 +43,16 @@ class DownloadVideoWindow(QWidget):
 
         self.setLayout(main_layout)
 
-    # TODO: It validates the URLs, in this case only the video URLs, by removing different parameters.
     def process_url(self):
         url = self.url_input.text().strip()
         if not url:
-            QMessageBox.warning(self, "Missing URL", "Please enter a video URL.")
+            QMessageBox.warning(self, 'Missing URL', 'Please enter a video URL.')
             return
-
-        parsed_url = urlparse(url)
-        query_params = parse_qs(parsed_url.query)
-
-        if "list" in query_params:
-            QMessageBox.information(self, "Playlist Detected",
-                                    "This appears to be a playlist URL.\nPlease use the 'Download Playlist' option instead.")
-            return
-
-        is_valid = False
-
-        if "youtube.com" in parsed_url.netloc and parsed_url.path == "/watch":
-            if "v" in query_params:
-                is_valid = True
-
-        elif "youtu.be" in parsed_url.netloc:
-            if parsed_url.path.strip("/"):
-                is_valid = True
+        
+        is_valid, message = is_valid_youtube_video(url)
 
         if not is_valid:
-            QMessageBox.critical(self, "Invalid URL",
-                                "Please enter a valid YouTube video URL (youtube.com/watch?v=... or youtu.be/...).")
+            QMessageBox.critical(self, 'Invalid URL', message)
             return
 
         # TODO: Here would go the download manager call
